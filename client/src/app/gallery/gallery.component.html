@@ -1,0 +1,10 @@
+<h1>Welcome To The Reminder App</h1>
+
+<h3 style="color:red">This is What I need to do today:</h3>
+
+<div *ngFor='let reminder of reminders'>
+  <li> {{ reminder.item }} ---> {{ reminder.importance}}</li>
+  <a class="btn btn-link" routerLink="/reminder/{{reminder._id}}">Go To Details</a>
+</div>
+
+<app-newreminder></app-newreminder>

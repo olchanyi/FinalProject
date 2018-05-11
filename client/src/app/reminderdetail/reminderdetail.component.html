@@ -1,0 +1,14 @@
+<form #form="ngForm" (ngSubmit)="updateReminder(form.value)">
+  <div class="form-group">
+        <label for="itemField">Reminder:</label>
+        <input #item name="itemField" class="form-control" [ngModel]="reminder.item">
+        <br />
+        <label for="importanceField">Importance:</label>
+        <input name="importanceField" class="form-control" [ngModel]="reminder.importance">
+     </div>
+     <button type="submit">save</button>
+</form>
+
+<button type="button" (click)="deleteReminder()">Delete this reminder</button>
+
+<button OnClick=" location.href='/#/' ">Back to gallery</button>

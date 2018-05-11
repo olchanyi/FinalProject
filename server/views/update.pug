@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= "Update Reminder"
+  p ORIGINAL REMINDER: #{update_item.item} IMPORTANCE: #{update_item.importance}
+  p
+  form(name="New To Do Item", method="post", action="/update/"+update_item._id)
+        div.input
+            span.label To Do
+            input(type="text", name="toDo", value=update_item.item)
+            span.label Importance
+            input(type="text", name="importance", value=update_item.importance)
+        div.actions
+            input(type="submit", value="Update Reminder")

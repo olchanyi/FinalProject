@@ -1,0 +1,21 @@
+<div>
+  <h3> Create New Reminder</h3>
+  <form #newreminderForm="ngForm" (ngSubmit)="save(newreminderForm.value)">
+    <div>
+        <label>Reminder:
+          <input required minlength="2" #item="ngModel" placeholder="Reminder" name="item" class="form-control" [(ngModel)]="reminder.item">
+        </label>
+        <div *ngIf="reminder.invalid && (reminder.dirty || reminder.touched)" class="alert alert-danger">
+          <div *ngIf="reminder.errors.minlength">
+            Remidner must be at least 2 characters long.
+          </div>
+        </div>
+        <br/>
+        <label>Importance:
+          <input placeholder="Importance" name="importance" class="form-control" [(ngModel)]="reminder.importance">
+        </label>
+        <br/>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!newreminderForm.valid">save</button>
+  </form>
+</div>

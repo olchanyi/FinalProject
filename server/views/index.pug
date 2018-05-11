@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= "Welcome to the to do list:"
+  h4= "Add Reminder"
+  form(name="New To Do Item", method="post", action="/add")
+        div.input
+            span.label To Do
+            input(type="text", name="toDo")
+            span.label Importance
+            input(type="text", name="importance")
+        div.actions
+            input(type="submit", value="Add Reminder")
+  
+  .row
+    each row in myToDoList
+      p REMINDER: #{row.item} IMPORTANCE: #{row.importance}
+      a(href='/delete/'+row._id) Delete Reminder 
+      space /
+      a(href='/update/'+row._id) Update Reminder 
+
+

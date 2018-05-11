@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="demo">
+<button type="button" onclick="loadReminders()">Load Reminders</button>
+</div>
+<div id="listOfReminders">&nbsp;</div>
+
+<h3>Get One Reminder By Id</h3>
+<input type="text" id="loadOneReminder" value="enter reminder id here">
+<button onclick="loadOneReminder()">Load One Reminder</button>
+<div id="listOneReminder">&nbsp;</div>
+
+<h3>Delete Reminder</h3>
+<input type="text" id="deleteReminder" value="delete reminder id here">
+<button onclick="deleteReminder()">Delete Reminder</button>
+<div id="deleteListReminder">&nbsp;</div>
+
+<h3>Update Reminder</h3>
+<form id="updateForm" action="" method="post">
+  id <input type="text" name="formId" value="id"><br>
+  Reminder <input type="text" name="formReminder" value="Updated Reminder"><br>
+  Importance <input type="text" name="formImportance" value="Updated Reminder Importance"><br>
+  <input type="button" onclick="updateReminder()" value="Submit">
+</form>
+<div id="updateReminder">&nbsp;</div>
+
+
+<script>
+function loadReminders() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET","http://165.227.212.60:8080/api/reminders/");
+  xhr.send();
+  xhr.addEventListener("readystatechange", function(){
+    if (this.readyState == 4 && this.status == 200) {
+      listOfReminders.innerHTML = this.response;
+    }
+  })  
+}
+
+function loadOneReminder() {
+  var xhr = new XMLHttpRequest();
+  var getOnePath = "http://165.227.212.60:8080/api/reminders/" + document.getElementById("loadOneReminder").value;
+  xhr.open("GET", getOnePath);
+  xhr.send();
+  xhr.addEventListener("readystatechange", function(){
+    if (this.readyState == 4 && this.status == 200) {
+      listOneReminder.innerHTML = this.response;
+    }
+    else {
+      listOneReminder.innerHTML = "Reminder Not Found or Error"
+    }
+  })
+}
+
+function deleteReminder() {
+  var xhr = new XMLHttpRequest();
+  var deletePath = "http://165.227.212.60:8080/api/reminders/" + document.getElementById("deleteReminder").value;
+  xhr.open("DELETE", deletePath);
+  xhr.send();
+  xhr.addEventListener("readystatechange", function(){
+    if (this.readyState == 4 && this.status == 200) {
+      deleteListReminder.innerHTML = "Delete Successful";
+    }
+    else {
+      deleteListReminder.innerHTML = "Reminder Not Found or Error"
+    }
+  })
+}
+
+
+function updateReminder() {
+  var xhr = new XMLHttpRequest();
+  var updatePath = "http://165.227.212.60:8080/api/reminders/" + document.getElementById("updateForm")[0].value;
+  var reminder = {
+      item: document.getElementById("updateForm")[1].value,
+      importance: document.getElementById("updateForm")[2].value
+  }
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  xhr.open("POST", updatePath);
+  xhr.send(JSON.stringify(reminder));
+  xhr.addEventListener("readystatechange", function(){
+    if (this.readyState == 4 && this.status == 201) {
+      updateReminder.innerHTML = "Update Successful";
+    }
+    else {
+      updateReminder.innerHTML = "Reminder Not Found or Error"
+    }
+  })
+}
+</script>
+</body>
+</html>
